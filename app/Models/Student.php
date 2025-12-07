@@ -12,4 +12,9 @@ class Student extends Model
     {
         return $this->hasMany(Phone::class);
     }
+
+    public function nisn()
+    {
+        return $this->hasOne(Nisn::class);
+    }
 }

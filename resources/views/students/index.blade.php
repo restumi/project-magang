@@ -30,6 +30,7 @@
                                 <thead class="bg-slate-200 dark:bg-slate-700">
                                     <tr>
                                         <th class="table-th">Nama</th>
+                                        <th class="table-th">Nisn</th>
                                         <th class="table-th">Nomor HP</th>
                                         <th class="table-th text-center">Aksi</th>
                                     </tr>
@@ -39,6 +40,11 @@
                                         <tr>
                                             <td class="table-td">
                                                 <div class="text-sm font-medium text-slate-600 dark:text-slate-300">{{ $student->name }}</div>
+                                            </td>
+                                            <td class="table-td">
+                                                <div class="text-sm font-medium text-slate-600 dark:text-slate-300">
+                                                    {{ $student->nisn->nisn }}
+                                                </div>
                                             </td>
                                             <td class="table-td">
                                                 @if($student->phones->count())
@@ -58,6 +64,7 @@
                                                             data-bs-toggle="modal" data-bs-target="#editStudentModal"
                                                             data-id="{{ $student->id }}"
                                                             data-name="{{ $student->name }}"
+                                                            data-nisn="{{ $student->nisn }}"
                                                             data-phones="{{ json_encode($student->phones->pluck('number')) }}">
                                                         <iconify-icon icon="heroicons:pencil-square"></iconify-icon>
                                                     </button>
@@ -105,6 +112,13 @@
                             Nama Lengkap
                         </label>
                         <input type="text" name="name" class="form-control block w-full px-3 py-2 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 bg-clip-padding border border-slate-300 dark:border-slate-600 rounded transition ease-in-out focus:text-slate-700 focus:bg-white focus:outline-none" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-slate-700 dark:text-slate-300 text-sm font-medium mb-2" for="nisn">
+                            NISN
+                        </label>
+                        <input type="text" name="nisn" class="form-control block w-full px-3 py-2 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 bg-clip-padding border border-slate-300 dark:border-slate-600 rounded transition ease-in-out focus:text-slate-700 focus:bg-white focus:outline-none" required>
                     </div>
 
                     <div class="mb-4">
@@ -158,6 +172,13 @@
                             Nama Lengkap
                         </label>
                         <input type="text" name="name" id="edit_name" class="form-control block w-full px-3 py-2 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 bg-clip-padding border border-slate-300 dark:border-slate-600 rounded transition ease-in-out focus:text-slate-700 focus:bg-white focus:outline-none" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-slate-700 dark:text-slate-300 text-sm font-medium mb-2" for="edit_nisn">
+                            NISN
+                        </label>
+                        <input type="text" name="nisn" id="edit_nisn" class="form-control block w-full px-3 py-2 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 bg-clip-padding border border-slate-300 dark:border-slate-600 rounded transition ease-in-out focus:text-slate-700 focus:bg-white focus:outline-none" required>
                     </div>
 
                     <div class="mb-4">
@@ -224,12 +245,14 @@ document.addEventListener('click', function(e) {
 document.querySelectorAll('[data-bs-target="#editStudentModal"]').forEach(button => {
     button.addEventListener('click', function() {
         const id = this.getAttribute('data-id');
+        const nisn = this.getAttribute('data-nisn');
         const name = this.getAttribute('data-name');
         const phones = JSON.parse(this.getAttribute('data-phones'));
 
         // Isi data dasar
         document.getElementById('edit_id').value = id;
         document.getElementById('edit_name').value = name;
+        document.getElementById('edit_nisn').value = nisn;
 
         // Isi nomor HP
         const container = document.getElementById('editPhoneContainer');
