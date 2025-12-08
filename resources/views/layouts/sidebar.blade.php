@@ -55,30 +55,20 @@
               </li>
             </ul>
           </li>
-          <!-- Apps Area -->
-          <li class="sidebar-menu-title">APPS</li>
-          <li class="">
-            <a href="email.html" class="navItem">
-              <span class="flex items-center">
-            <iconify-icon class=" nav-icon" icon="heroicons-outline:mail"></iconify-icon>
-            <span>Email</span>
-              </span>
-            </a>
-          </li>
           <li class="">
             <a href="javascript:void(0)" class="navItem">
               <span class="flex items-center">
             <iconify-icon class=" nav-icon" icon="heroicons-outline:document"></iconify-icon>
-            <span>Projects</span>
+            <span>Social</span>
               </span>
               <iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
             </a>
             <ul class="sidebar-submenu">
               <li>
-                <a href="project.html">Projects</a>
+                <a href="">Posts</a>
               </li>
               <li>
-                <a href="project-details.html">Project Details</a>
+                <a href="">Videos</a>
               </li>
             </ul>
           </li>
