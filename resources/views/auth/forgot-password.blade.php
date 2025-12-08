@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <title>Dashcode - HTML Template</title>
+  <title>Dashcode - Forgot password</title>
   <link rel="icon" type="image/png" href="assets/images/logo/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,15 +65,23 @@
               Enter your Email and instructions will be sent to you!
             </div>
             <!-- BEGIN: Forgot Password Form -->
-            <form class="space-y-4" action='index.html'>
-              <div class="fromGroup">
-                <label class="block capitalize form-label">email</label>
-                <div class="relative ">
-                  <input type="email" name="email" class="  form-control py-2" placeholder="Enter your Email">
+            <form class="space-y-4" action="{{ route('password.email') }}" method="POST">
+                @csrf
+                <div class="fromGroup">
+                    <label class="block capitalize form-label">email</label>
+                <div class="relative">
+                    <input type="email" name="email" class="  form-control py-2" placeholder="Enter your Email" required>
                 </div>
+                @error('email')
+                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                @enderror
+                @if (session('status'))
+                    <p class="mt-1 text-sm text-green-500">
+                        {{ session('status') }}
+                    </p>
+                @endif
               </div>
-              {{-- <button class="btn btn-dark block w-full text-center">Send recovery email</button> --}}
-              <a href="/reset-password" class="btn btn-dark block w-full text-center">Send recovery email</a>
+              <button type="submit" class="btn btn-dark block w-full text-center">Send recovery email</button>
             </form>
             <!-- END: Forgot Password Form -->
 

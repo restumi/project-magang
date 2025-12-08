@@ -14,6 +14,14 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegist'])->name('register');
 Route::post('/register', [AuthController::class, 'regist']);
 
+// forgot password
+Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
+Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// reset password
+Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+
 
 Route::middleware('auth')->group(function(){
     Route::get('/', [HobbyController::class, 'index'])->name('home');
