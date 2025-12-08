@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HobbyController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 // ===================== AUTH =====================
@@ -32,9 +33,14 @@ Route::middleware('auth')->group(function(){
     // ===================== STUDENTS =====================
     Route::resource('students', StudentController::class)->except('show', 'edit', 'create');
 
-    // profile
+    // ===================== VERIFY EMAIL =====================
+    Route::get('/email/verify', [VerifyEmailController::class, 'showVerify'])->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verifyRequest'])->name('verification.verify');
+    Route::post('/email/verification/resend', [VerifyEmailController::class, 'reSend'])->middleware('throttle:6,1')->name('verification.resend');
+
+    // ===================== PROFILE =====================
     Route::get('/profile', function () {
-        return 'profile';
+        return view('profile');
     })->name('profile');
 
     // logout
