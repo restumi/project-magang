@@ -32,6 +32,7 @@
                                         <th class="table-th">Nama</th>
                                         <th class="table-th">Nisn</th>
                                         <th class="table-th">Nomor HP</th>
+                                        <th class="table-th">Hobi</th>
                                         <th class="table-th text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -57,14 +58,26 @@
                                                     <span class="text-sm text-slate-400">-</span>
                                                 @endif
                                             </td>
-                                            <td class="table-td text-center">
-                                                <div class="flex justify-center space-x-3 rtl:space-x-reverse">
+                                            <td class="table-td">
+                                                @if ($student->hobbies->count())
+                                                    <ul  class="space-y-1">
+                                                        @foreach ($student->hobbies as $hobby)
+                                                            <li class="text-sm text-slate-600 dark:text-slate-300">{{ $hobby->name }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                @else
+                                                    <span class="text-sm text-slate-400">-</span>
+                                                @endif
+                                            </td>
+                                            <td class="table-td">
+                                                <div class="flex justify-start space-x-3 rtl:space-x-reverse">
                                                     <!-- Edit -->
                                                     <button type="button" class="text-primary-500 hover:text-primary-700"
                                                             data-bs-toggle="modal" data-bs-target="#editStudentModal"
                                                             data-id="{{ $student->id }}"
                                                             data-name="{{ $student->name }}"
-                                                            data-nisn="{{ $student->nisn }}"
+                                                            data-nisn="{{ $student->nisn->nisn }}"
+                                                            data-hobbies="{{ json_encode($student->hobbies->pluck('id')->toArray()) }}"
                                                             data-phones="{{ json_encode($student->phones->pluck('number')) }}">
                                                         <iconify-icon icon="heroicons:pencil-square"></iconify-icon>
                                                     </button>
@@ -138,6 +151,29 @@
                             Tambah Nomor HP
                         </button>
                     </div>
+
+                    <div class="mb-4">
+                        <label class="block text-slate-700 dark:text-slate-300 text-sm font-medium mb-2">
+                            hobbi
+                        </label>
+                        <div class="grid grid-cols-2 gap-2">
+                            @foreach ($allHobbies as $hobby)
+                                {{-- <label class="flex items-center space-x-2">
+                                    <input type="checkbox" name="hobbies[]" class="form-checkbox" value="{{ $hobby->id }}">
+                                    <span class="text-sm">{{ $hobby->name }}</span>
+                                </label> --}}
+                                <div class="checkbox-area primary-checkbox mr-2 sm:mr-4 mt-2">
+                                    <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="hidden" name="hobbies[]" value="{{ $hobby->id }}">
+                                    <span class="h-4 w-4 border flex-none border-slate-100 dark:border-slate-800 rounded inline-flex ltr:mr-3 rtl:ml-3 relative transition-all duration-150 bg-slate-100 dark:bg-slate-900">
+                                                <img src="assets/images/icon/ck-white.svg" alt="" class="h-[10px] w-[10px] block m-auto opacity-0"></span>
+                                    <span class="text-slate-700 dark:text-slate-400 text-sm leading-6 capitalize">{{ $hobby->name }}</span>
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-6 border-t border-slate-200 dark:border-slate-700 rounded-b-md">
                     <button type="button" class="px-6 py-2.5 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-xs leading-tight rounded shadow-md hover:bg-slate-300 dark:hover:bg-slate-600 hover:shadow-lg focus:outline-none focus:ring-0 transition duration-150 ease-in-out" data-bs-dismiss="modal">
@@ -192,6 +228,28 @@
                             <iconify-icon icon="heroicons-outline:plus-circle" class="mr-1"></iconify-icon>
                             Tambah Nomor HP
                         </button>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-slate-700 dark:text-slate-300 text-sm font-medium mb-2">
+                            hobbi
+                        </label>
+                        <div class="grid grid-cols-2 gap-2" id="editHobbyContainer">
+                            @foreach ($allHobbies as $hobby)
+                                {{-- <label class="flex items-center space-x-2">
+                                    <input type="checkbox" name="hobbies[]" class="form-checkbox" value="{{ $hobby->id }}">
+                                    <span class="text-sm text-slate-700 dark:text-slate-300">{{ $hobby->name }}</span>
+                                </label> --}}
+                                <div class="checkbox-area primary-checkbox mr-2 sm:mr-4 mt-2">
+                                    <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="hidden" name="hobbies[]" value="{{ $hobby->id }}">
+                                    <span class="h-4 w-4 border flex-none border-slate-100 dark:border-slate-800 rounded inline-flex ltr:mr-3 rtl:ml-3 relative transition-all duration-150 bg-slate-100 dark:bg-slate-900">
+                                                <img src="assets/images/icon/ck-white.svg" alt="" class="h-[10px] w-[10px] block m-auto opacity-0"></span>
+                                    <span class="text-slate-700 dark:text-slate-400 text-sm leading-6 capitalize">{{ $hobby->name }}</span>
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-6 border-t border-slate-200 dark:border-slate-700 rounded-b-md">
@@ -248,6 +306,7 @@ document.querySelectorAll('[data-bs-target="#editStudentModal"]').forEach(button
         const nisn = this.getAttribute('data-nisn');
         const name = this.getAttribute('data-name');
         const phones = JSON.parse(this.getAttribute('data-phones'));
+        const hobbies = JSON.parse(this.getAttribute('data-hobbies'));
 
         // Isi data dasar
         document.getElementById('edit_id').value = id;
@@ -267,6 +326,12 @@ document.querySelectorAll('[data-bs-target="#editStudentModal"]').forEach(button
                 </button>
             `;
             container.appendChild(phoneDiv);
+        });
+
+        // hobbi
+        const hobbyCheckboxes = document.querySelectorAll('#editStudentForm input[name="hobbies[]"]');
+        hobbyCheckboxes.forEach(checkbox => {
+            checkbox.checked = hobbies.includes(parseInt(checkbox.value));
         });
 
         // Set action form

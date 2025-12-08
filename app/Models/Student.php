@@ -17,4 +17,9 @@ class Student extends Model
     {
         return $this->hasOne(Nisn::class);
     }
+
+    public function hobbies()
+    {
+        return $this->belongsToMany(Hobby::class, 'student_hobbies');
+    }
 }

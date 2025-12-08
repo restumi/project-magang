@@ -179,3 +179,18 @@ rtl:space-x-reverse search-modal" data-bs-toggle="modal" data-bs-target="#search
     </div>
 </div>
 <!-- END: Header -->
+
+        <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+          <div class="modal-dialog relative w-auto pointer-events-none top-1/4">
+            <div class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white dark:bg-slate-900 bg-clip-padding rounded-md outline-none text-current">
+              <form>
+                <div class="relative">
+                  <input type="text" class="form-control !py-3 !pr-12" placeholder="Search">
+                  <button class="absolute right-0 top-1/2 -translate-y-1/2 w-9 h-full border-l text-xl border-l-slate-200 dark:border-l-slate-600 dark:text-slate-300 flex items-center justify-center">
+                    <iconify-icon icon="heroicons-solid:search"></iconify-icon>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>

@@ -43,8 +43,8 @@
                                             <td class="table-td">
                                                 <div class="text-sm text-slate-600 dark:text-slate-300">{{ $hobby->description ?? '-' }}</div>
                                             </td>
-                                            <td class="table-td text-center">
-                                                <div class="flex justify-center space-x-3 rtl:space-x-reverse">
+                                            <td class="table-td">
+                                                <div class="flex justify-start space-x-3 rtl:space-x-reverse">
                                                     <button type="button" class="text-primary-500 hover:text-primary-700"
                                                             data-bs-toggle="modal" data-bs-target="#editHobbyModal"
                                                             data-id="{{ $hobby->id }}"

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hobby;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,8 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::with('phones', 'nisn')->latest()->get();
-        return view('students.index', compact('students'));
+        $allHobbies = Hobby::all();
+        return view('students.index', compact('students', 'allHobbies'));
     }
 
     public function store(Request $request)
@@ -28,6 +30,10 @@ class StudentController extends Controller
 
         foreach($request->phones as $number){
             $student->phones()->create(['number' => $number]);
+        }
+
+        if($request->hobbies){
+            $student->hobbies()->attach($request->hobbies);
         }
 
         return redirect()-> back()->with('success', 'Student created!');
@@ -50,6 +56,8 @@ class StudentController extends Controller
         foreach($request->phones as $number){
             $student->phones()->create(['number' => $number]);
         }
+
+        $student->hobbies()->sync($request->hobbies ?? []);
 
         return redirect()->back()->with('success', 'Student updated!');
     }
