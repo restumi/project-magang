@@ -1,36 +1,37 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HobbyController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
-// ===================== PAGE =====================
-Route::get('/', function () {
-    return view('layouts.app');
-})->name('home');
+// ===================== AUTH =====================
+// login
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
 
-// ===================== DASHBOARD =====================
-// Route::get('/hobbies', [HobbyController::class, 'index'])->name('hobbies');
-// Route::get('/students', [StudentController::class, 'index'])->name('students.index');
-
-
-Route::get('/profile', function () {
-    return 'profile';
-})->name('profile');
-
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-
-Route::get('/regist', function () {
-    return view('auth.regist');
-})->name('regist');
+// regist
+Route::get('/register', [AuthController::class, 'showRegist'])->name('register');
+Route::post('/register', [AuthController::class, 'regist']);
 
 
-// ===================== HOBBY =====================
-Route::resource('hobbies', HobbyController::class)->except('show', 'edit', 'create');
+Route::middleware('auth')->group(function(){
+    Route::get('/', [HobbyController::class, 'index'])->name('home');
 
-// ===================== STUDENTS =====================
-Route::resource('students', StudentController::class)->except('show', 'edit', 'create');
+    // ===================== HOBBY =====================
+    Route::resource('hobbies', HobbyController::class)->except('show', 'edit', 'create');
+
+    // ===================== STUDENTS =====================
+    Route::resource('students', StudentController::class)->except('show', 'edit', 'create');
+
+    // profile
+    Route::get('/profile', function () {
+        return 'profile';
+    })->name('profile');
+
+    // logout
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
 
 

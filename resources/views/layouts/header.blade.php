@@ -162,8 +162,9 @@ rtl:space-x-reverse search-modal" data-bs-toggle="modal" data-bs-target="#search
                             <li><a href="{{ route('home') }}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white">Dashboard</a></li>
                             <li><a href="{{ route('profile') }}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white">Profile</a></li>
                             <li>
-                                <form action="{{ route('login') }}" method="GET" class="block px-4 py-2">
-                                    <button type="submit" class="text-left w-full text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white">Logout</button>
+                                <form action="{{ route('logout') }}" method="POST" class="block px-4 py-2">
+                                    @csrf
+                                    <button type="submit" class="block px-4 py-2 btn btn-danger">Logout</button>
                                 </form>
                             </li>
                         </ul>
