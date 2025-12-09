@@ -3,8 +3,8 @@
       <div id="bodyOverlay" class="w-screen h-screen fixed top-0 bg-slate-900 bg-opacity-50 backdrop-blur-sm z-10 hidden"></div>
       <div class="logo-segment">
         <a class="flex items-center" href="/">
-          <img src="assets/images/logo/logo-c.svg" class="black_logo" alt="logo">
-          <img src="assets/images/logo/logo-c-white.svg" class="white_logo" alt="logo">
+          <img src="{{ asset('assets/images/logo/logo-c.svg')}}" class="black_logo" alt="logo">
+          <img src="{{ asset('assets/images/logo/logo-c-white.svg')}}" class="white_logo" alt="logo">
           <span class="ltr:ml-3 rtl:mr-3 text-xl font-Inter font-bold text-slate-900 dark:text-white">DashCode</span>
         </a>
         <!-- Sidebar Type Button -->
@@ -65,17 +65,17 @@
             </a>
             <ul class="sidebar-submenu">
               <li>
-                <a href="">Posts</a>
+                <a href="/posts">Posts</a>
               </li>
               <li>
-                <a href="">Videos</a>
+                <a href="/videos">Videos</a>
               </li>
             </ul>
           </li>
         </ul>
         <!-- Upgrade Your Business Plan Card Start -->
         <div class="bg-slate-900 mb-10 mt-24 p-4 relative text-center rounded-2xl text-white" id="sidebar_bottom_wizard">
-          <img src="assets/images/svg/rabit.svg" alt="" class="mx-auto relative -mt-[73px]">
+          <img src="{{ asset('assets/images/svg/rabit.svg')}}" alt="" class="mx-auto relative -mt-[73px]">
           <div class="max-w-[160px] mx-auto mt-6">
             <div class="widget-title font-Inter mb-1">Job Emails</div>
             <div class="text-xs font-light font-Inter">

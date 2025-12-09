@@ -3,6 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HobbyController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\Social\CommentController;
+use App\Http\Controllers\Social\PostController;
+use App\Http\Controllers\Social\VideoController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +42,15 @@ Route::middleware('auth')->group(function(){
     Route::get('/email/verify', [VerifyEmailController::class, 'showVerify'])->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verifyRequest'])->name('verification.verify');
     Route::post('/email/verification/resend', [VerifyEmailController::class, 'reSend'])->middleware('throttle:6,1')->name('verification.resend');
+
+    // ===================== SOCIAL =====================
+    Route::resource('posts', PostController::class)->except(['show']);
+    Route::resource('videos', VideoController::class);
+    // ===================== COMMENT =====================
+    Route::post('/posts/{post}/comments', [CommentController::class, 'storePostComment'])->name('posts.comments.store');
+    Route::post('/videos/{video}/comments', [CommentController::class, 'storeVideoComment'])->name('videos.comments.store');
+    Route::put('/comments/{comment}', [CommentController::class, 'updateComment'])->name('comments.update');
+    Route::delete('/comments/{comment}', [CommentController::class, 'deleteComment'])->name('comments.destroy');
 
     // ===================== PROFILE =====================
     Route::get('/profile', function () {
