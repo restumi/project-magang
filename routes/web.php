@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HobbyController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,7 @@ Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
 
+
 Route::middleware('auth')->group(function(){
     Route::get('/', [HobbyController::class, 'index'])->name('home');
 
@@ -42,6 +44,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/profile', function () {
         return view('profile');
     })->name('profile');
+
+    // job processing
+    Route::post('/send-maintance-info', [MailController::class, 'sendEmails'])->name('test.bulk.email');
 
     // logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
