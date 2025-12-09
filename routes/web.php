@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HobbyController;
 use App\Http\Controllers\MailController;
@@ -27,6 +28,12 @@ Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->
 Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
+// socialite
+Route::get('/auth/google', [SocialiteController::class, 'redirectToGoole'])->name('auth.google');
+Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCallback']);
+Route::get('/auth/facebook', [SocialiteController::class, 'redirectToFacebook'])->name('auth.facebook');
+Route::get('/auth/facebook/callback', [SocialiteController::class, 'handleFacebookCallback']);
+
 
 
 Route::middleware('auth')->group(function(){
@@ -46,6 +53,7 @@ Route::middleware('auth')->group(function(){
     // ===================== SOCIAL =====================
     Route::resource('posts', PostController::class)->except(['show']);
     Route::resource('videos', VideoController::class);
+
     // ===================== COMMENT =====================
     Route::post('/posts/{post}/comments', [CommentController::class, 'storePostComment'])->name('posts.comments.store');
     Route::post('/videos/{video}/comments', [CommentController::class, 'storeVideoComment'])->name('videos.comments.store');
@@ -57,10 +65,16 @@ Route::middleware('auth')->group(function(){
         return view('profile');
     })->name('profile');
 
-    // job processing
+    // ===================== CONNECT WITH SOCIAL ACCOUNT =====================
+    Route::get('/user/connect/google', [SocialiteController::class, 'redirectToGoogleForConnect'])->name('connect.google');
+    Route::get('/user/connect/google/callback', [SocialiteController::class, 'connectGoogle']);
+    Route::get('/user/connect/facebook', [SocialiteController::class, 'redirectToFacebookForConnect'])->name('connect.facebook');
+    Route::get('/user/connect/facebook/callback', [SocialiteController::class, 'connectFacebook']);
+
+    // ===================== JOB PROCESSING =====================
     Route::post('/send-maintance-info', [MailController::class, 'sendEmails'])->name('test.bulk.email');
 
-    // logout
+    // ===================== LOGOUT =====================
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
