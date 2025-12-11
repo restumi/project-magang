@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HobbyController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Social\CommentController;
 use App\Http\Controllers\Social\PostController;
 use App\Http\Controllers\Social\VideoController;
@@ -37,6 +38,10 @@ Route::get('/auth/facebook/callback', [SocialiteController::class, 'handleFacebo
 
 
 Route::middleware('auth')->group(function(){
+    // ===================== SELECT ROLE =====================
+    Route::get('/switch-role/{role}', [RoleController::class, 'switchRole'])->name('switch.role');
+
+
     Route::get('/', [HobbyController::class, 'index'])->name('home');
 
     // ===================== HOBBY =====================

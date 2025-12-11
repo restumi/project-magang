@@ -1,3 +1,7 @@
+@php
+    $user = Auth::user();
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Students')
@@ -7,6 +11,7 @@
     <h4 class="font-medium lg:text-2xl text-xl capitalize text-slate-900 inline-block ltr:pr-4 rtl:pl-4 mb-4 sm:mb-0">
         Students
     </h4>
+    @if (in_array($user->role, ['super_admin']))
     <div class="flex sm:space-x-4 space-x-2 sm:justify-end items-center rtl:space-x-reverse">
         <button type="button" class="btn inline-flex justify-center bg-white text-slate-700 dark:bg-slate-700 dark:text-white"
                 data-bs-toggle="modal" data-bs-target="#createStudentModal">
@@ -16,6 +21,7 @@
             </span>
         </button>
     </div>
+    @endif
 </div>
 
 <!-- Daftar Student -->
@@ -33,7 +39,9 @@
                                         <th class="table-th">Nisn</th>
                                         <th class="table-th">Nomor HP</th>
                                         <th class="table-th">Hobi</th>
+                                        @if (in_array($user->role, ['super_admin']))
                                         <th class="table-th text-center">Aksi</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
@@ -69,6 +77,7 @@
                                                     <span class="text-sm text-slate-400">-</span>
                                                 @endif
                                             </td>
+                                            @if (in_array($user->role, ['super_admin']))
                                             <td class="table-td">
                                                 <div class="flex justify-start space-x-3 rtl:space-x-reverse">
                                                     <!-- Edit -->
@@ -91,6 +100,7 @@
                                                     </form>
                                                 </div>
                                             </td>
+                                            @endif
                                         </tr>
                                     @empty
                                         <tr>

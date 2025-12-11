@@ -24,54 +24,68 @@
       opacity-0"></div>
       <div class="sidebar-menus bg-white dark:bg-slate-800 py-2 px-4 h-[calc(100%-80px)] overflow-y-auto z-50" id="sidebar_menus">
         <ul class="sidebar-menu">
-          <li class="sidebar-menu-title">MENU</li>
-          <li class="">
-            <a href="#" class="navItem">
-              <span class="flex items-center">
-            <iconify-icon class=" nav-icon" icon="heroicons-outline:home"></iconify-icon>
-            <span>Dashboard</span>
-              </span>
-              <iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
-            </a>
-            <ul class="sidebar-submenu">
-              <li>
-                <a href="/hobbies">Hobbies</a>
-              </li>
-              <li>
-                <a href="/students">Students
+            {{-- SELECT ROLES --}}
+            <li class="sidebar-menu-title">ROLE</li>
+            <li class="">
+                <a href="#" class="navItem">
+                    <span class="flex items-center">
+                        <iconify-icon class="nav-icon" icon="heroicons-outline:user"></iconify-icon>
+                        <span>Select roles</span>
+                    </span>
+                    <iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
                 </a>
-              </li>
-              <li>
-                <a href="project-dashboard.html">Project Dashboard
+                <ul class="sidebar-submenu">
+                <li>
+                    <a href="{{ route('switch.role', 'user') }}">User</a>
+                </li>
+                <li>
+                    <a href="{{ route('switch.role', 'admin') }}">Admin
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('switch.role', 'super_admin') }}">Super Admin
+                    </a>
+                </li>
+                </ul>
+            </li>
+
+
+            <li class="sidebar-menu-title">MENU</li>
+            <li class="">
+                <a href="#" class="navItem">
+                    <span class="flex items-center">
+                        <iconify-icon class=" nav-icon" icon="heroicons-outline:home"></iconify-icon>
+                        <span>Dashboard</span>
+                    </span>
+                    <iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
                 </a>
-              </li>
-              <li>
-                <a href="crm-dashboard.html">CRM Dashboard
+                <ul class="sidebar-submenu">
+                <li>
+                    <a href="/hobbies">Hobbies</a>
+                </li>
+                <li>
+                    <a href="/students">Students
+                    </a>
+                </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="javascript:void(0)" class="navItem">
+                <span class="flex items-center">
+                <iconify-icon class=" nav-icon" icon="heroicons-outline:document"></iconify-icon>
+                <span>Social</span>
+                </span>
+                <iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
                 </a>
-              </li>
-              <li>
-                <a href="banking-dashboard.html">Banking Dashboard
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="">
-            <a href="javascript:void(0)" class="navItem">
-              <span class="flex items-center">
-            <iconify-icon class=" nav-icon" icon="heroicons-outline:document"></iconify-icon>
-            <span>Social</span>
-              </span>
-              <iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
-            </a>
-            <ul class="sidebar-submenu">
-              <li>
-                <a href="/posts">Posts</a>
-              </li>
-              <li>
-                <a href="/videos">Videos</a>
-              </li>
-            </ul>
-          </li>
+                <ul class="sidebar-submenu">
+                <li>
+                    <a href="/posts">Posts</a>
+                </li>
+                <li>
+                    <a href="/videos">Videos</a>
+                </li>
+                </ul>
+            </li>
         </ul>
         <!-- Upgrade Your Business Plan Card Start -->
         <div class="bg-slate-900 mb-10 mt-24 p-4 relative text-center rounded-2xl text-white" id="sidebar_bottom_wizard">
