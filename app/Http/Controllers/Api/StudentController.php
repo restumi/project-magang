@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Classes\apiResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreStudentRequestApi;
 use App\Models\Hobby;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -43,16 +42,20 @@ class StudentController extends Controller
             $student->hobbies()->attach($request->hobbies);
         }
 
-        return apiResponse::success($student, "Student created", 201);
+        $studentWithRelations = Student::with('phones', 'nisn', 'hobbies')->find($student->id);
+
+        return apiResponse::success($studentWithRelations, "Student created", 201);
     }
 
     public function update(Request $request, Student $student)
     {
         $request->validate([
             'name' => 'required|string',
-            'nisn' => 'required|string|unique:nisns,nisn' . $student->nisn?->id,
+            'nisn' => 'required|string|unique:nisns,nisn,' . ($student->nisn?->id ?? '0'),
             'phones' => 'required|array|min:1',
-            'phones.*' => 'required|string|max:20'
+            'phones.*' => 'required|string|max:20',
+            'hobbies' => 'nullable|array',
+            'hobbies.*' => 'exists:hobbies,id',
         ]);
 
         $student->update(['name' => $request->name]);
@@ -65,6 +68,8 @@ class StudentController extends Controller
         }
 
         $student->hobbies()->sync($request->hobbies ?? []);
+
+        $student->load('phones', 'nisn', 'hobbies');
 
         return apiResponse::success($student, "Student updated");
     }
